@@ -8,6 +8,7 @@ var prefix = require('gulp-autoprefixer');
 var connect = require("gulp-connect");
 var sass = require('gulp-sass');
 var uncss = require('gulp-uncss');
+const babel = require('gulp-babel');
 
 
 //HTML TASKS
@@ -22,6 +23,9 @@ gulp.task('html',function () {
 
 gulp.task('js', function () {
     return gulp.src('js/*.js')
+        .pipe(babel({
+            presets: ['env']
+        }))
         .pipe(uglify())
         .pipe(rename('bundler.min.js'))
         .pipe(gulp.dest('build/js'))
@@ -61,7 +65,7 @@ gulp.task('connect', function () {
     connect.server({
         root: "build",
         port: 3000,
-        livereload: true,
+        livereload: true
     });
 });
 
